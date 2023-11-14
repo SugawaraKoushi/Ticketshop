@@ -1,15 +1,64 @@
 package vladek.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import vladek.model.Vehicle;
 import vladek.services.VehicleService;
+
+import java.rmi.NoSuchObjectException;
+import java.util.UUID;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("vehicle")
 public class VehicleController {
-    private VehicleService vehicleService;
+    private final VehicleService vehicleService;
+    private final Logger logger = Logger.getLogger(VehicleController.class.getName());
 
     public VehicleController(VehicleService vehicleService) {
         this.vehicleService = vehicleService;
     }
+
+    @PostMapping("/create")
+    public ResponseEntity<Vehicle> create(int sits, String type) {
+        Vehicle vehicle = vehicleService.create(sits, type);
+        return new ResponseEntity<>(vehicle, HttpStatus.OK);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Vehicle> update(@PathVariable String id, int sits, String type) {
+        UUID uuid = UUID.fromString(id);
+        try {
+            Vehicle vehicle = vehicleService.update(uuid, sits, type);
+            return new ResponseEntity<>(vehicle, HttpStatus.OK);
+        } catch (NoSuchObjectException e) {
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity delete(@PathVariable String id) {
+        UUID uuid = UUID.fromString(id);
+        vehicleService.delete(uuid);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Vehicle> get(@PathVariable String id) {
+        UUID uuid = UUID.fromString(id);
+        try {
+            Vehicle vehicle = vehicleService.get(uuid);
+            return new ResponseEntity<>(vehicle, HttpStatus.OK);
+        } catch (NoSuchObjectException e) {
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
 }
+
+// curl -X POST --data "sits=100&type=Boeing 747" http://localhost:8080/vehicle/create
+// curl -X PUT --data "sits=1&type=A" http://localhost:8080/vehicle/update/cd6f609e-c1e1-434f-b171-1865a85b98d6
+// curl -X DELETE http://localhost:8080/vehicle/delete/cd6f609e-c1e1-434f-b171-1865a85b98d6
+// curl -X GET http://localhost:8080/vehicle/get/278450ae-6b4d-4604-98eb-3b3b9900363a
