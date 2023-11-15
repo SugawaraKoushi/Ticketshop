@@ -21,8 +21,8 @@ public class VehicleController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Vehicle> create(int sits, String type) {
-        Vehicle vehicle = vehicleService.create(sits, type);
+    public ResponseEntity<Vehicle> create(@RequestBody Vehicle v) {
+        Vehicle vehicle = vehicleService.create(v.getSits(), v.getType());
         return new ResponseEntity<>(vehicle, HttpStatus.OK);
     }
 
