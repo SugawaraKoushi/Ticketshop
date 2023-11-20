@@ -7,6 +7,8 @@ import vladek.model.repositories.VehicleRepository;
 import vladek.services.interfaces.IVehicleService;
 
 import java.rmi.NoSuchObjectException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -50,5 +52,12 @@ public class VehicleService implements IVehicleService {
             throw new NoSuchObjectException("No such object with id " + id);
         }
         return vehicle;
+    }
+
+    @Override
+    public List<Vehicle> getAll() {
+        List<Vehicle> vehicles = new ArrayList<>();
+        repository.findAll().forEach(vehicles::add);
+        return vehicles;
     }
 }

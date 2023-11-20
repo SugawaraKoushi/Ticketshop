@@ -7,6 +7,7 @@ import vladek.model.Vehicle;
 import vladek.services.VehicleService;
 
 import java.rmi.NoSuchObjectException;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -56,9 +57,16 @@ public class VehicleController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/get")
+    public ResponseEntity<List<Vehicle>> getAll() {
+        List<Vehicle> vehicles = vehicleService.getAll();
+        return new ResponseEntity<>(vehicles, HttpStatus.OK);
+    }
 }
 
-// curl -X POST --data "sits=100&type=Boeing 747" http://localhost:8080/vehicle/create
+// curl -X POST http://localhost:8080/vehicle/create -H "Content-Type: application/json" -d "{\"sits\":100,\"type\":\"Boeing 747\"}"
 // curl -X PUT --data "sits=1&type=A" http://localhost:8080/vehicle/update/cd6f609e-c1e1-434f-b171-1865a85b98d6
 // curl -X DELETE http://localhost:8080/vehicle/delete/cd6f609e-c1e1-434f-b171-1865a85b98d6
 // curl -X GET http://localhost:8080/vehicle/get/278450ae-6b4d-4604-98eb-3b3b9900363a
+// curl -X GET http://localhost:8080/vehicle/get
