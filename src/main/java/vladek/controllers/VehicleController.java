@@ -28,10 +28,9 @@ public class VehicleController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Vehicle> update(@PathVariable String id, int sits, String type) {
-        UUID uuid = UUID.fromString(id);
+    public ResponseEntity<Vehicle> update(@RequestBody Vehicle v) {
         try {
-            Vehicle vehicle = vehicleService.update(uuid, sits, type);
+            Vehicle vehicle = vehicleService.update(v.getId(), v.getSits(), v.getType());
             return new ResponseEntity<>(vehicle, HttpStatus.OK);
         } catch (NoSuchObjectException e) {
             logger.info(e.getMessage());
