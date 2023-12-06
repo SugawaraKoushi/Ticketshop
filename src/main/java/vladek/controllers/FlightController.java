@@ -9,6 +9,7 @@ import vladek.services.FlightService;
 import java.rmi.NoSuchObjectException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -63,5 +64,11 @@ public class FlightController {
             logger.info(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<List<Flight>> getAll() {
+        List<Flight> flights = flightService.getAll();
+        return new ResponseEntity<>(flights, HttpStatus.OK);
     }
 }

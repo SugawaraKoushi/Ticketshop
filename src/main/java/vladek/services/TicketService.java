@@ -7,7 +7,9 @@ import vladek.model.repositories.TicketRepository;
 import vladek.services.interfaces.ITicketService;
 
 import java.rmi.NoSuchObjectException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -58,5 +60,12 @@ public class TicketService implements ITicketService {
         }
 
         return ticket;
+    }
+
+    @Override
+    public List<Ticket> getAll() {
+        List<Ticket> tickets = new ArrayList<>();
+        repository.findAll().forEach(tickets::add);
+        return tickets;
     }
 }

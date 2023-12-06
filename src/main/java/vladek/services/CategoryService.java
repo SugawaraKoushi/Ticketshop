@@ -7,6 +7,8 @@ import vladek.model.repositories.CategoryRepository;
 import vladek.services.interfaces.ICategoryService;
 
 import java.rmi.NoSuchObjectException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -51,5 +53,12 @@ public class CategoryService implements ICategoryService {
         }
 
         return category;
+    }
+
+    @Override
+    public List<Category> getAll() {
+        List<Category> categories = new ArrayList<>();
+        repository.findAll().forEach(categories::add);
+        return categories;
     }
 }

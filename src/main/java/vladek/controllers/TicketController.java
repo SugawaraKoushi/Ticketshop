@@ -9,6 +9,7 @@ import vladek.services.TicketService;
 import java.rmi.NoSuchObjectException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -67,4 +68,9 @@ public class TicketController {
         }
     }
 
+    @GetMapping("/get")
+    public ResponseEntity<List<Ticket>> getAll() {
+        List<Ticket> tickets = ticketService.getAll();
+        return new ResponseEntity<>(tickets, HttpStatus.OK);
+    }
 }

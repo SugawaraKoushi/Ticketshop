@@ -7,7 +7,9 @@ import vladek.model.repositories.FlightRepository;
 import vladek.services.interfaces.IFlightService;
 
 import java.rmi.NoSuchObjectException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -58,5 +60,12 @@ public class FlightService implements IFlightService {
         }
 
         return flight;
+    }
+
+    @Override
+    public List<Flight> getAll() {
+        List<Flight> flights = new ArrayList<>();
+        repository.findAll().forEach(flights::add);
+        return flights;
     }
 }

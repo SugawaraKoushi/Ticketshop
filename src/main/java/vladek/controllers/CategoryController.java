@@ -7,6 +7,7 @@ import vladek.model.Category;
 import vladek.services.CategoryService;
 
 import java.rmi.NoSuchObjectException;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -21,16 +22,15 @@ public class CategoryController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Category> create(String type, int sits) {
-        Category category = categoryService.create(type, sits);
+    public ResponseEntity<Category> create(@RequestBody Category category) {
+        Category c = categoryService.create(category.getType(), category.getSits());
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Category> update(@PathVariable String id, String type, int sits) {
-        UUID uuid = UUID.fromString(id);
+    public ResponseEntity<Category> update(@RequestBody Category category) {
         try {
-            Category category = categoryService.update(uuid, type, sits);
+            Category c = categoryService.update(category.getId(), category.getType(), category.getSits());
             return new ResponseEntity<>(category, HttpStatus.OK);
         } catch (NoSuchObjectException e) {
             logger.info(e.getMessage());
@@ -55,5 +55,11 @@ public class CategoryController {
             logger.info(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<List<Category>> getAll() {
+        List<Category> categories = categoryService.getAll();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 }
