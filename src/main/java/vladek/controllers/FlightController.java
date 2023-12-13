@@ -24,21 +24,15 @@ public class FlightController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Flight> create(int num, String from, String to, String departure, String arriving) {
-        Date departureDate = Timestamp.valueOf(departure);
-        Date arrivingDate = Timestamp.valueOf(arriving);
-        Flight flight = flightService.create(num, from, to, departureDate, arrivingDate);
+    public ResponseEntity<Flight> create(@RequestBody Flight f) {
+        Flight flight = flightService.create(f);
         return new ResponseEntity<>(flight, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Flight> update(@PathVariable String id, int num, String from, String to, String departure, String arriving) {
-        UUID uuid = UUID.fromString(id);
-        Date departureDate = Timestamp.valueOf(departure);
-        Date arrivingDate = Timestamp.valueOf(arriving);
-
+    public ResponseEntity<Flight> update(@RequestBody Flight f) {
         try {
-            Flight flight = flightService.update(uuid, num, from, to, departureDate, arrivingDate);
+            Flight flight = flightService.update(f.getId(), f.getNum(), f.getFrom(), f.getTo(), f.getDepartureDate(), f.getArrivingDate(), f.getVehicle());
             return new ResponseEntity<>(flight, HttpStatus.OK);
         } catch (NoSuchObjectException e) {
             logger.info(e.getMessage());
