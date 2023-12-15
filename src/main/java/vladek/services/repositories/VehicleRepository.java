@@ -1,11 +1,11 @@
-package vladek.model.repositories;
+package vladek.services.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import vladek.model.Flight;
+import vladek.model.Vehicle;
 
 import java.util.UUID;
 
 @Repository
-public interface FlightRepository extends CrudRepository<Flight, UUID> {
+public interface VehicleRepository extends CrudRepository<Vehicle, UUID> {
 }

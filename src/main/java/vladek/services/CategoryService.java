@@ -3,7 +3,7 @@ package vladek.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vladek.model.Category;
-import vladek.model.repositories.CategoryRepository;
+import vladek.services.repositories.CategoryRepository;
 import vladek.services.interfaces.ICategoryService;
 
 import java.rmi.NoSuchObjectException;
@@ -17,24 +17,19 @@ public class CategoryService implements ICategoryService {
     private CategoryRepository repository;
 
     @Override
-    public Category create(String type, int sits) {
-        Category category = new Category();
-        category.setType(type);
-        category.setSits(sits);
+    public Category create(Category category) {
         repository.save(category);
         return category;
     }
 
     @Override
-    public Category update(UUID id, String type, int sits) throws NoSuchObjectException {
-        Category category = repository.findById(id).orElse(null);
+    public Category update(Category category) throws NoSuchObjectException {
+        Category c = repository.findById(category.getId()).orElse(null);
 
-        if (category == null) {
-            throw new NoSuchObjectException("No such object with id " + id);
+        if (c == null) {
+            throw new NoSuchObjectException("No such object with id " + category.getId());
         }
 
-        category.setType(type);
-        category.setSits(sits);
         repository.save(category);
         return category;
     }

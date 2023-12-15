@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface IFlightService {
     Flight create(Flight flight);
-    Flight update(UUID id, int num, String from, String to, Date departure, Date arriving, Vehicle vehicle) throws NoSuchObjectException;
+    Flight update(Flight flight) throws NoSuchObjectException;
     void delete(UUID id);
     Flight get(UUID id) throws NoSuchObjectException;
 

@@ -3,7 +3,7 @@ package vladek.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vladek.model.Ticket;
-import vladek.model.repositories.TicketRepository;
+import vladek.services.repositories.TicketRepository;
 import vladek.services.interfaces.ITicketService;
 
 import java.rmi.NoSuchObjectException;

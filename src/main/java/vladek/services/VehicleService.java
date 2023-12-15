@@ -3,7 +3,7 @@ package vladek.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vladek.model.Vehicle;
-import vladek.model.repositories.VehicleRepository;
+import vladek.services.repositories.VehicleRepository;
 import vladek.services.interfaces.IVehicleService;
 
 import java.rmi.NoSuchObjectException;

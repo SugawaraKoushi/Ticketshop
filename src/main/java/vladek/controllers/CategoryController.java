@@ -23,15 +23,15 @@ public class CategoryController {
 
     @PostMapping("/create")
     public ResponseEntity<Category> create(@RequestBody Category category) {
-        Category c = categoryService.create(category.getType(), category.getSits());
-        return new ResponseEntity<>(category, HttpStatus.OK);
+        Category c = categoryService.create(category);
+        return new ResponseEntity<>(c, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Category> update(@RequestBody Category category) {
         try {
-            Category c = categoryService.update(category.getId(), category.getType(), category.getSits());
-            return new ResponseEntity<>(category, HttpStatus.OK);
+            Category c = categoryService.update(category);
+            return new ResponseEntity<>(c, HttpStatus.OK);
         } catch (NoSuchObjectException e) {
             logger.info(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

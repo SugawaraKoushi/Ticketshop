@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ICategoryService {
-    Category create(String type, int sits);
-    Category update(UUID id, String type, int sits) throws NoSuchObjectException;
+    Category create(Category category);
+    Category update(Category category) throws NoSuchObjectException;
     void delete(UUID id);
     Category get(UUID id) throws NoSuchObjectException;
 

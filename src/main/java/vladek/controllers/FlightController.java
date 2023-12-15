@@ -7,8 +7,6 @@ import vladek.model.Flight;
 import vladek.services.FlightService;
 
 import java.rmi.NoSuchObjectException;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -32,7 +30,7 @@ public class FlightController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Flight> update(@RequestBody Flight f) {
         try {
-            Flight flight = flightService.update(f.getId(), f.getNum(), f.getFrom(), f.getTo(), f.getDepartureDate(), f.getArrivingDate(), f.getVehicle());
+            Flight flight = flightService.update(f);
             return new ResponseEntity<>(flight, HttpStatus.OK);
         } catch (NoSuchObjectException e) {
             logger.info(e.getMessage());

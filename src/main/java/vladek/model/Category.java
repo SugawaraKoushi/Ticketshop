@@ -1,5 +1,6 @@
 package vladek.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -23,11 +24,11 @@ public class Category {
 
     private int sits;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "vehicle_id")
-    @ToString.Exclude
     private Vehicle vehicle;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     @ToString.Exclude
     private List<Ticket> tickets;

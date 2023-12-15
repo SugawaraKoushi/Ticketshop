@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Entity
+//@Entity
 @Getter
 @Setter
 public class User {

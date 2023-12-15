@@ -3,13 +3,11 @@ package vladek.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vladek.model.Flight;
-import vladek.model.Vehicle;
-import vladek.model.repositories.FlightRepository;
+import vladek.services.repositories.FlightRepository;
 import vladek.services.interfaces.IFlightService;
 
 import java.rmi.NoSuchObjectException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,18 +23,13 @@ public class FlightService implements IFlightService {
     }
 
     @Override
-    public Flight update(UUID id, int num, String from, String to, Date departure, Date arriving, Vehicle vehicle) throws NoSuchObjectException {
-        Flight flight = repository.findById(id).orElse(null);
+    public Flight update(Flight flight) throws NoSuchObjectException {
+        Flight f = repository.findById(flight.getId()).orElse(null);
 
-        if (flight == null) {
-            throw new NoSuchObjectException("No such object with id " + id);
+        if (f == null) {
+            throw new NoSuchObjectException("No such object with id " + f.getId());
         }
 
-        flight.setNum(num);
-        flight.setFrom(from);
-        flight.setTo(to);
-        flight.setDepartureDate(departure);
-        flight.setArrivingDate(arriving);
         repository.save(flight);
         return flight;
     }
