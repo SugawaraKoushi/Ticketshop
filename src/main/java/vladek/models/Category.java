@@ -1,11 +1,10 @@
-package vladek.model;
+package vladek.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -15,29 +14,22 @@ import java.util.UUID;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "Flights")
-public class Flight {
+@Table(name = "Categories")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private int num;
+    private String type;
 
-    @Column(name = "`from`")
-    private String from;
-
-    @Column(name = "`to`")
-    private String to;
-
-    private Date departureDate;
-    private Date arrivingDate;
+    private int sits;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "flight")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     @ToString.Exclude
     private List<Ticket> tickets;
 
@@ -48,8 +40,8 @@ public class Flight {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Flight flight = (Flight) o;
-        return getId() != null && Objects.equals(getId(), flight.getId());
+        Category category = (Category) o;
+        return getId() != null && Objects.equals(getId(), category.getId());
     }
 
     @Override

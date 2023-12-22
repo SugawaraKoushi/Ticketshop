@@ -2,7 +2,7 @@ package vladek.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vladek.model.Ticket;
+import vladek.models.Ticket;
 import vladek.services.repositories.TicketRepository;
 import vladek.services.interfaces.ITicketService;
 

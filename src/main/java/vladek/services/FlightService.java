@@ -2,7 +2,7 @@ package vladek.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vladek.model.Flight;
+import vladek.models.Flight;
 import vladek.services.repositories.FlightRepository;
 import vladek.services.interfaces.IFlightService;
 

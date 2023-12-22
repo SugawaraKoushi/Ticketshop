@@ -2,7 +2,7 @@ package vladek.services.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import vladek.model.Category;
+import vladek.models.Category;
 
 import java.util.UUID;
 

@@ -3,7 +3,7 @@ package vladek.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vladek.model.Vehicle;
+import vladek.models.Vehicle;
 import vladek.services.VehicleService;
 
 import java.rmi.NoSuchObjectException;

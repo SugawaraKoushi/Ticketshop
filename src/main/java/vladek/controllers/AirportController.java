@@ -3,8 +3,8 @@ package vladek.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vladek.models.Category;
-import vladek.services.CategoryService;
+import vladek.models.Airport;
+import vladek.services.AirportService;
 
 import java.rmi.NoSuchObjectException;
 import java.util.List;
@@ -12,25 +12,25 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/category")
-public class CategoryController {
-    private final CategoryService categoryService;
-    private final Logger logger = Logger.getLogger(CategoryController.class.getName());
+@RequestMapping("/airport")
+public class AirportController {
+    private final AirportService airportService;
+    private final Logger logger = Logger.getLogger(AirportController.class.getName());
 
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
+    public AirportController(AirportService airportService) {
+        this.airportService = airportService;
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Category> create(@RequestBody Category category) {
-        Category c = categoryService.create(category);
+    public ResponseEntity<Airport> create(@RequestBody Airport airport) {
+        Airport c = airportService.create(airport);
         return new ResponseEntity<>(c, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Category> update(@RequestBody Category category) {
+    public ResponseEntity<Airport> update(@RequestBody Airport airport) {
         try {
-            Category c = categoryService.update(category);
+            Airport c = airportService.update(airport);
             return new ResponseEntity<>(c, HttpStatus.OK);
         } catch (NoSuchObjectException e) {
             logger.info(e.getMessage());
@@ -41,16 +41,16 @@ public class CategoryController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable String id) {
         UUID uuid = UUID.fromString(id);
-        categoryService.delete(uuid);
+        airportService.delete(uuid);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Category> get(@PathVariable String id) {
+    public ResponseEntity<Airport> get(@PathVariable String id) {
         UUID uuid = UUID.fromString(id);
         try {
-            Category category = categoryService.get(uuid);
-            return new ResponseEntity<>(category, HttpStatus.OK);
+            Airport airport = airportService.get(uuid);
+            return new ResponseEntity<>(airport, HttpStatus.OK);
         } catch (NoSuchObjectException e) {
             logger.info(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -58,8 +58,8 @@ public class CategoryController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<List<Category>> getAll() {
-        List<Category> categories = categoryService.getAll();
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+    public ResponseEntity<List<Airport>> getAll() {
+        List<Airport> airports = airportService.getAll();
+        return new ResponseEntity<>(airports, HttpStatus.OK);
     }
 }

@@ -1,4 +1,4 @@
-package vladek.model;
+package vladek.models;
 
 import jakarta.persistence.*;
 import lombok.*;

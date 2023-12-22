@@ -1,4 +1,4 @@
-package vladek.model;
+package vladek.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

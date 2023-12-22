@@ -2,7 +2,7 @@ package vladek.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vladek.model.Vehicle;
+import vladek.models.Vehicle;
 import vladek.services.repositories.VehicleRepository;
 import vladek.services.interfaces.IVehicleService;
 

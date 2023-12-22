@@ -3,7 +3,7 @@ package vladek.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vladek.model.Ticket;
+import vladek.models.Ticket;
 import vladek.services.TicketService;
 
 import java.rmi.NoSuchObjectException;

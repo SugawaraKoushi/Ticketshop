@@ -1,6 +1,6 @@
 package vladek.services.interfaces;
 
-import vladek.model.Ticket;
+import vladek.models.Ticket;
 
 import java.rmi.NoSuchObjectException;
 import java.util.Date;

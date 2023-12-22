@@ -2,7 +2,7 @@ package vladek.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vladek.model.Category;
+import vladek.models.Category;
 import vladek.services.repositories.CategoryRepository;
 import vladek.services.interfaces.ICategoryService;
 
