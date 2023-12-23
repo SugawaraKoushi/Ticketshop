@@ -23,11 +23,13 @@ public class Flight {
 
     private int num;
 
-    @Column(name = "`from`")
-    private String from;
+    @ManyToOne
+    @JoinColumn(name = "flight_id_from")
+    private Airport from;
 
-    @Column(name = "`to`")
-    private String to;
+    @ManyToOne
+    @JoinColumn(name = "flight_id_to")
+    private Airport to;
 
     private Date departureDate;
     private Date arrivingDate;

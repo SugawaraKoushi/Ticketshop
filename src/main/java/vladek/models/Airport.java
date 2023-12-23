@@ -1,9 +1,11 @@
 package vladek.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -12,6 +14,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@Table(name = "Airports")
 public class Airport {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,6 +25,14 @@ public class Airport {
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "from")
+    private List<Flight> flightsFrom;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "to")
+    private List<Flight> flightsTo;
 
     @Override
     public final boolean equals(Object o) {
