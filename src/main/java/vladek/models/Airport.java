@@ -27,11 +27,13 @@ public class Airport {
     private City city;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "from")
+    @OneToMany(mappedBy = "from", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<Flight> flightsFrom;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "to")
+    @OneToMany(mappedBy = "to", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<Flight> flightsTo;
 
     @Override
