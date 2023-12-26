@@ -24,9 +24,13 @@ public class FlightController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Flight> create(@RequestBody Flight f) {
+    public ResponseEntity create(@RequestBody Flight f) {
+        boolean isValid = flightService.validateBeforeSaving(f);
+        if (!isValid) {
+            return new ResponseEntity<>("Заполните обязательные поля поля", HttpStatus.BAD_REQUEST);
+        }
         Flight flight = flightService.create(f);
-        return new ResponseEntity<>(flight, HttpStatus.OK);
+        return new ResponseEntity<>(flight, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
