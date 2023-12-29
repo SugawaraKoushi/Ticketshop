@@ -82,12 +82,4 @@ public class FlightService implements IFlightService {
         c.add(Calendar.DATE, 1);
         return c.getTime();
     }
-
-    public boolean validateBeforeSaving(Flight flight) {
-        if (flight.getFrom() == null || flight.getNum() == 1) {
-            return false;
-        }
-
-        return true;
-    }
 }
