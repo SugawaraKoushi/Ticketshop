@@ -27,7 +27,7 @@ public class FlightController {
     public ResponseEntity create(@RequestBody Flight f) {
         boolean isValid = flightService.validateBeforeSaving(f);
         if (!isValid) {
-            return new ResponseEntity<>("Заполните обязательные поля поля", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Заполните обязательные поля 111", HttpStatus.BAD_REQUEST);
         }
         Flight flight = flightService.create(f);
         return new ResponseEntity<>(flight, HttpStatus.CREATED);

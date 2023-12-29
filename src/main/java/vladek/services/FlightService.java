@@ -84,7 +84,7 @@ public class FlightService implements IFlightService {
     }
 
     public boolean validateBeforeSaving(Flight flight) {
-        if (flight.getFrom() == null) {
+        if (flight.getFrom() == null || flight.getNum() == 1) {
             return false;
         }
 
