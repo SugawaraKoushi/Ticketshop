@@ -24,11 +24,11 @@ public class Flight {
     private int num;
 
     @ManyToOne
-    @JoinColumn(name = "flight_id_from")
+    @JoinColumn(name = "\"from\"")
     private Airport from;
 
     @ManyToOne
-    @JoinColumn(name = "flight_id_to")
+    @JoinColumn(name = "\"to\"")
     private Airport to;
 
     private Date departureDate;
