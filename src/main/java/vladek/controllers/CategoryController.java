@@ -22,19 +22,27 @@ public class CategoryController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Category> create(@RequestBody Category category) {
-        Category c = categoryService.create(category);
-        return new ResponseEntity<>(c, HttpStatus.OK);
+    public ResponseEntity create(@RequestBody Category category) {
+        try {
+            Category c = categoryService.create(category);
+            return new ResponseEntity<>(c, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Category> update(@RequestBody Category category) {
+    public ResponseEntity update(@RequestBody Category category) {
         try {
             Category c = categoryService.update(category);
             return new ResponseEntity<>(c, HttpStatus.OK);
         } catch (NoSuchObjectException e) {
             logger.info(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException e) {
+            logger.info(e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
