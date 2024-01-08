@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 import vladek.models.Role;
 import vladek.models.User;
 import vladek.services.interfaces.IUserService;
@@ -14,13 +15,14 @@ import vladek.services.repositories.UserRepository;
 import java.rmi.NoSuchObjectException;
 import java.util.UUID;
 
+@Service
 public class UserService implements IUserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+//    @Autowired
+//    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -41,7 +43,7 @@ public class UserService implements IUserService {
             throw new EntityExistsException("User with username already exists");
         }
         user.setRole(new Role(UUID.randomUUID(), "ROLE_USER"));
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return user;
     }
