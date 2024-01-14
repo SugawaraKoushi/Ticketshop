@@ -1,12 +1,12 @@
 package vladek.services.interfaces;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
 import vladek.models.User;
 
 import java.rmi.NoSuchObjectException;
+import java.util.List;
 import java.util.UUID;
 
-public interface IUserService extends UserDetailsService {
+public interface IUserService {
     User create(User user);
 
     User update(User user) throws NoSuchObjectException;
@@ -14,4 +14,8 @@ public interface IUserService extends UserDetailsService {
     void delete(UUID id);
 
     User get(UUID id) throws NoSuchObjectException;
+
+    List<User> getAll();
+
+    User login(String username, String password);
 }

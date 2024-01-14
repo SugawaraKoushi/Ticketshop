@@ -2,9 +2,6 @@ package vladek.services;
 
 import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import vladek.models.Role;
 import vladek.models.User;
@@ -13,6 +10,8 @@ import vladek.services.repositories.RoleRepository;
 import vladek.services.repositories.UserRepository;
 
 import java.rmi.NoSuchObjectException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -21,19 +20,6 @@ public class UserService implements IUserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
-//    @Autowired
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-
-        return user;
-    }
 
     @Override
     public User create(User user) throws EntityExistsException {
@@ -42,8 +28,9 @@ public class UserService implements IUserService {
         if (u != null) {
             throw new EntityExistsException("User with username already exists");
         }
-        user.setRole(new Role(UUID.randomUUID(), "ROLE_USER"));
-        //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+        Role userRole = roleRepository.findByName("ROLE_USER");
+        user.setRole(userRole);
         userRepository.save(user);
         return user;
     }
@@ -71,6 +58,22 @@ public class UserService implements IUserService {
 
         if (user == null) {
             throw new NoSuchObjectException("No such object with id " + id);
+        }
+
+        return user;
+    }
+
+    @Override
+    public List<User> getAll() {
+        return new ArrayList<>(userRepository.findAll());
+    }
+
+    @Override
+    public User login(String username, String password) throws IllegalArgumentException {
+        User user = userRepository.findByUsername(username);
+
+        if (!user.getPassword().equals(password)) {
+            throw new IllegalArgumentException("Неправильно введен логин или пароль");
         }
 
         return user;

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +14,8 @@ import java.util.UUID;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Role implements GrantedAuthority {
+@Table(name = "roles")
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -30,11 +30,6 @@ public class Role implements GrantedAuthority {
     public Role (UUID id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    @Override
-    public String getAuthority() {
-        return name;
     }
 
     @Override
