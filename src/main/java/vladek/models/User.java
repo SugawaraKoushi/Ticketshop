@@ -18,14 +18,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String firstName;
-    private String lastName;
-
-    @JsonIgnore
+    private String firstname;
+    private String lastname;
     private String username;
-
-    @ToString.Exclude
-    @JsonIgnore
     private String password;
 
     @JsonIgnore
