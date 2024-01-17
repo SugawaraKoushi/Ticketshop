@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import vladek.models.City;
+import vladek.models.Role;
 import vladek.models.User;
 import vladek.services.UserService;
 
@@ -93,5 +94,14 @@ public class UserController {
     public ResponseEntity logout() {
         currentUser = null;
         return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @GetMapping("/role")
+    public ResponseEntity<Role> getUserRole() {
+        if (currentUser != null) {
+            return new ResponseEntity<>(currentUser.getRole(), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }
