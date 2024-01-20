@@ -3,6 +3,7 @@ package vladek.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vladek.models.Ticket;
+import vladek.models.User;
 import vladek.services.repositories.TicketRepository;
 import vladek.services.interfaces.ITicketService;
 
@@ -18,13 +19,7 @@ public class TicketService implements ITicketService {
     private TicketRepository repository;
 
     @Override
-    public Ticket create(String name, Date departureDate, Date purchaseDate, Date bookingDate, int price) {
-        Ticket ticket = new Ticket();
-        ticket.setName(name);
-        ticket.setDepartureDate(departureDate);
-        ticket.setPurchaseDate(purchaseDate);
-        ticket.setBookingDate(bookingDate);
-        ticket.setPrice(price);
+    public Ticket create(Ticket ticket) {
         repository.save(ticket);
         return ticket;
     }

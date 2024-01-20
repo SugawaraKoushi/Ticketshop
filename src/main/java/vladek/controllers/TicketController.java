@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vladek.models.Ticket;
+import vladek.models.User;
 import vladek.services.TicketService;
 
 import java.rmi.NoSuchObjectException;
@@ -24,16 +25,17 @@ public class TicketController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Ticket> create(String name, String departure, String purchase, String booking, int price) {
-        Date departureDate = Timestamp.valueOf(departure);
-        Date purchaseDate = Timestamp.valueOf(purchase);
-        Date bookingDate = Timestamp.valueOf(booking);
-        Ticket ticket = ticketService.create(name, departureDate, purchaseDate, bookingDate, price);
-        return new ResponseEntity<>(ticket, HttpStatus.OK);
+    public ResponseEntity<Ticket> create(@RequestBody Ticket ticket) {
+//        Date departureDate = Timestamp.valueOf(departure);
+//        Date purchaseDate = Timestamp.valueOf(purchase);
+//        Date bookingDate = Timestamp.valueOf(booking);
+        Ticket t = ticketService.create(ticket);
+        return new ResponseEntity<>(t, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Ticket> update(@PathVariable String id, String name, String departure, String purchase, String booking, int price) {
+    public ResponseEntity<Ticket> update(@PathVariable String id, String name, String departure,String purchase,
+                                         String booking, int price) {
         UUID uuid = UUID.fromString(id);
         Date departureDate = Timestamp.valueOf(departure);
         Date purchaseDate = Timestamp.valueOf(purchase);
