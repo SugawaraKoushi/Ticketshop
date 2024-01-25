@@ -2,8 +2,9 @@ package vladek.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vladek.models.Airport;
+import vladek.models.Category;
 import vladek.models.Flight;
+import vladek.models.Vehicle;
 import vladek.services.repositories.FlightRepository;
 import vladek.services.interfaces.IFlightService;
 
@@ -14,6 +15,8 @@ import java.util.*;
 public class FlightService implements IFlightService {
     @Autowired
     private FlightRepository repository;
+    @Autowired
+    private CategoryService categoryService;
 
     @Override
     public Flight create(Flight flight) {
@@ -74,6 +77,19 @@ public class FlightService implements IFlightService {
                 || flight.getDepartureDate().before(start) && flight.getDepartureDate().after(end)
         );
         return flights;
+    }
+
+    @Override
+    public Map<UUID, List<Category>> getFlightsCategories(List<Flight> flights) {
+        Map<UUID, List<Category>> result = new HashMap<>();
+
+        for (Flight flight : flights) {
+            Vehicle vehicle = flight.getVehicle();
+            List<Category> categories = categoryService.getByVehicle(vehicle);
+            result.put(flight.getId(), categories);
+        }
+
+        return result;
     }
 
     private Date addDay(Date date) {

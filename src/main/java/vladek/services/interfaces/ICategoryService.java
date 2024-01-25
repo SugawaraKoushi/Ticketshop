@@ -1,6 +1,7 @@
 package vladek.services.interfaces;
 
 import vladek.models.Category;
+import vladek.models.Vehicle;
 
 import java.rmi.NoSuchObjectException;
 import java.util.List;
@@ -12,4 +13,5 @@ public interface ICategoryService {
     void delete(UUID id);
     Category get(UUID id) throws NoSuchObjectException;
     List<Category> getAll();
+    List<Category> getByVehicle(Vehicle vehicle);
 }

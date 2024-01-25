@@ -3,13 +3,14 @@ package vladek.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vladek.models.Airport;
+import vladek.models.Category;
 import vladek.models.Flight;
 import vladek.services.FlightService;
 
 import java.rmi.NoSuchObjectException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -70,5 +71,11 @@ public class FlightController {
     public ResponseEntity<List<Flight>> getWhenDate(@RequestParam UUID from, @RequestParam UUID to, @RequestParam Date when) {
         List<Flight> flights = flightService.getFlightsWhenDate(from, to, when);
         return new ResponseEntity<>(flights, HttpStatus.OK);
+    }
+
+    @GetMapping("/get-categories")
+    public ResponseEntity<Map<UUID, List<Category>>> getFlightsCategories(@RequestParam List<Flight> flights) {
+        Map<UUID, List<Category>> flightsWithCategories = flightService.getFlightsCategories(flights);
+        return new ResponseEntity<>(flightsWithCategories, HttpStatus.OK);
     }
 }

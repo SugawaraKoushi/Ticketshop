@@ -26,9 +26,6 @@ public class TicketController {
 
     @PostMapping("/create")
     public ResponseEntity<Ticket> create(@RequestBody Ticket ticket) {
-//        Date departureDate = Timestamp.valueOf(departure);
-//        Date purchaseDate = Timestamp.valueOf(purchase);
-//        Date bookingDate = Timestamp.valueOf(booking);
         Ticket t = ticketService.create(ticket);
         return new ResponseEntity<>(t, HttpStatus.OK);
     }

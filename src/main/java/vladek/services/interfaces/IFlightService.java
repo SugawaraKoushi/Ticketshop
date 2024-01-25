@@ -1,11 +1,13 @@
 package vladek.services.interfaces;
 
 import vladek.models.Airport;
+import vladek.models.Category;
 import vladek.models.Flight;
 
 import java.rmi.NoSuchObjectException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface IFlightService {
@@ -15,4 +17,5 @@ public interface IFlightService {
     Flight get(UUID id) throws NoSuchObjectException;
     List<Flight> getAll();
     List<Flight> getFlightsWhenDate(UUID from, UUID to, Date when);
+    Map<UUID, List<Category>> getFlightsCategories(List<Flight> flights);
 }

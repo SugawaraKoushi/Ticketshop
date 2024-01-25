@@ -76,6 +76,11 @@ public class CategoryService implements ICategoryService {
         return categories;
     }
 
+    @Override
+    public List<Category> getByVehicle(Vehicle vehicle) {
+        return getCategoriesWhereVehicle(vehicle);
+    }
+
     private List<Category> getCategoriesWhereVehicle(Vehicle vehicle) {
         List<Category> categories = getAll();
         categories.removeIf(category -> !category.getVehicle().equals(vehicle));
