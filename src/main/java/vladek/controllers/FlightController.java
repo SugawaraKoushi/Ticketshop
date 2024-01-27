@@ -3,6 +3,7 @@ package vladek.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vladek.DTO.FlightWithCategories;
 import vladek.models.Category;
 import vladek.models.Flight;
 import vladek.services.FlightService;
@@ -74,8 +75,8 @@ public class FlightController {
     }
 
     @GetMapping("/get-categories")
-    public ResponseEntity<Map<UUID, List<Category>>> getFlightsCategories(@RequestParam List<Flight> flights) {
-        Map<UUID, List<Category>> flightsWithCategories = flightService.getFlightsCategories(flights);
+    public ResponseEntity<?> getFlightsCategories(@RequestParam List<Flight> flights) {
+        List<FlightWithCategories> flightsWithCategories = flightService.getFlightsCategories(flights);
         return new ResponseEntity<>(flightsWithCategories, HttpStatus.OK);
     }
 }

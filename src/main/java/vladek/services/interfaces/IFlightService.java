@@ -1,5 +1,6 @@
 package vladek.services.interfaces;
 
+import vladek.DTO.FlightWithCategories;
 import vladek.models.Airport;
 import vladek.models.Category;
 import vladek.models.Flight;
@@ -17,5 +18,5 @@ public interface IFlightService {
     Flight get(UUID id) throws NoSuchObjectException;
     List<Flight> getAll();
     List<Flight> getFlightsWhenDate(UUID from, UUID to, Date when);
-    Map<UUID, List<Category>> getFlightsCategories(List<Flight> flights);
+    List<FlightWithCategories> getFlightsCategories(List<Flight> flights);
 }

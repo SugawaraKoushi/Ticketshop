@@ -2,6 +2,7 @@ package vladek.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vladek.DTO.FlightWithCategories;
 import vladek.models.Category;
 import vladek.models.Flight;
 import vladek.models.Vehicle;
@@ -80,13 +81,16 @@ public class FlightService implements IFlightService {
     }
 
     @Override
-    public Map<UUID, List<Category>> getFlightsCategories(List<Flight> flights) {
-        Map<UUID, List<Category>> result = new HashMap<>();
+    public List<FlightWithCategories> getFlightsCategories(List<Flight> flights) {
+        List<FlightWithCategories> result = new ArrayList<>();
 
         for (Flight flight : flights) {
             Vehicle vehicle = flight.getVehicle();
             List<Category> categories = categoryService.getByVehicle(vehicle);
-            result.put(flight.getId(), categories);
+            FlightWithCategories fwc = new FlightWithCategories();
+            fwc.setFlightId(flight.getId());
+            fwc.setCategories(categories);
+            result.add(fwc);
         }
 
         return result;
