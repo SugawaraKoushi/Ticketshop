@@ -73,9 +73,8 @@ public class FlightService implements IFlightService {
         Date start = when;
         Date end = addDay(start);
         flights.removeIf(flight ->
-                !flight.getFrom().getId().equals(from)
-                || !flight.getTo().getId().equals(to)
-                || flight.getDepartureDate().before(start) && flight.getDepartureDate().after(end)
+                flight.getDepartureDate().before(start) || flight.getDepartureDate().after(end)
+                || !flight.getFrom().getId().equals(from) || !flight.getTo().getId().equals(to)
         );
         return flights;
     }
