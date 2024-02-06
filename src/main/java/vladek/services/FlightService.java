@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import vladek.DTO.FlightWithCategories;
 import vladek.models.Category;
 import vladek.models.Flight;
+import vladek.models.Ticket;
 import vladek.models.Vehicle;
 import vladek.services.repositories.FlightRepository;
 import vladek.services.interfaces.IFlightService;
@@ -18,6 +19,8 @@ public class FlightService implements IFlightService {
     private FlightRepository repository;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private TicketService ticketService;
 
     @Override
     public Flight create(Flight flight) {
@@ -75,7 +78,9 @@ public class FlightService implements IFlightService {
         flights.removeIf(flight ->
                 flight.getDepartureDate().before(start) || flight.getDepartureDate().after(end)
                 || !flight.getFrom().getId().equals(from) || !flight.getTo().getId().equals(to)
+                || getFlightFreeSeatsCount(flight) < 0
         );
+
         return flights;
     }
 
@@ -100,5 +105,13 @@ public class FlightService implements IFlightService {
         c.setTime(date);
         c.add(Calendar.DATE, 1);
         return c.getTime();
+    }
+
+    private int getFlightFreeSeatsCount(Flight flight) {
+        List<Ticket> tickets = ticketService.getAll();
+        tickets.removeIf(t -> t.getFlight().equals(flight));
+        int takenSeatsCount = tickets.size();
+        int seatsCount = flight.getVehicle().getSits();
+        return seatsCount - takenSeatsCount;
     }
 }

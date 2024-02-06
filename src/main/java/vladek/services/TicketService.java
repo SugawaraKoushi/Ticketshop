@@ -2,6 +2,7 @@ package vladek.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vladek.models.Category;
 import vladek.models.Ticket;
 import vladek.models.User;
 import vladek.services.repositories.TicketRepository;
@@ -19,8 +20,15 @@ public class TicketService implements ITicketService {
     private TicketRepository repository;
 
     @Override
-    public Ticket create(Ticket ticket) {
+    public Ticket create(Ticket ticket) throws Exception {
+        int seats = getCategoryFreeSeatsCount(ticket.getCategory());
+
+        if (seats == 0) {
+            throw new Exception("Нет свободных мест данной в категории");
+        }
+
         repository.save(ticket);
+
         return ticket;
     }
 
@@ -62,5 +70,11 @@ public class TicketService implements ITicketService {
         List<Ticket> tickets = new ArrayList<>();
         repository.findAll().forEach(tickets::add);
         return tickets;
+    }
+
+    private int getCategoryFreeSeatsCount(Category category) {
+        List<Ticket> tickets = getAll();
+        tickets.removeIf(t -> !t.getCategory().equals(category));
+        return category.getSits() - tickets.size();
     }
 }

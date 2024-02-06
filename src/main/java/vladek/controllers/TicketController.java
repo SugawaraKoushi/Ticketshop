@@ -25,9 +25,13 @@ public class TicketController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Ticket> create(@RequestBody Ticket ticket) {
-        Ticket t = ticketService.create(ticket);
-        return new ResponseEntity<>(t, HttpStatus.OK);
+    public ResponseEntity<?> create(@RequestBody Ticket ticket) {
+        try {
+            Ticket t = ticketService.create(ticket);
+            return new ResponseEntity<>(t, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/update/{id}")
