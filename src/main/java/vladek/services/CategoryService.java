@@ -93,9 +93,14 @@ public class CategoryService implements ICategoryService {
 
     private boolean isNumberOfSeatsValid(Category category) {
         List<Category> vehicleCategories = getCategoriesWhereVehicle(category.getVehicle());
+
+        if (vehicleCategories.isEmpty()) {
+            return true;
+        }
+
         int sumOfSeats = getSumOfSeatsInCategories(vehicleCategories);
         int vehicleSeats = category.getVehicle().getSits();
-        return (sumOfSeats + category.getSits()) < vehicleSeats;
+            return sumOfSeats <= vehicleSeats;
     }
 
     private boolean isNumberOfSeatsGreaterThanZero(Category category) {
